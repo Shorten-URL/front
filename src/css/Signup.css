@@ -1,0 +1,60 @@
+.container{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.app-wrapper{
+    min-width:350px;
+    min-height:650px;
+    padding:30px;
+    box-sizing:border-box;
+    border-radius:5px;
+}
+.title{
+    text-align:center;
+    margin-bottom : 15px;
+}
+.sub-title{
+    display:flex;
+    justify-content:center
+}
+.sub-title > p{
+    margin-right:5px;
+}
+.name,.email,.password{
+    margin:20px;
+    color:#969292;
+    font-size:16px;
+    display:flex;
+    flex-direction: column;
+}
+.password{
+    margin-bottom:40px;
+}
+.input{
+    height:32px;
+    font-size:20px;
+    outline:none;
+    border:1px solid gray;
+    margin-bottom:10px;
+}
+.error{
+    color:red;
+}
+.submit{
+    display:flex;
+    text-transform: uppercase;
+    font-size:20px;
+    color:white;
+    padding:10px 60px;
+    background:rgb(34,81,201);
+    border-style: hidden;
+    margin:auto;
+    cursor:pointer;
+    transition: all 0.1s;
+}
+button:active{
+    transform:translateY(2px)
+}

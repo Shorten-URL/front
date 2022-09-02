@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../css/Signup.css";
-function Login() {
+function Signup() {
   const [values, setValues] = useState({
     username: "",
     password: "",
+    email: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -21,6 +22,11 @@ function Login() {
     if (!v.username) {
       error.username = "이름을 입력하세요.";
     }
+    if (!v.email) {
+      error.email = "이메일을 입력하세요.";
+    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(v.email)) {
+      error.email = "알맞은 이메일 형식을 입력하세요.";
+    }
     if (!v.password) {
       error.password = "비밀번호를 입력하세요.";
     } else if (v.password.length < 6) {
@@ -32,13 +38,24 @@ function Login() {
     <div className="container">
       <div className="app-wrapper">
         <div>
-          <h2 className="title">Sign up and start shortening</h2>
+          <h2 className="title">Login and start sharing</h2>
           <div className="sub-title">
-            <p>계정이 없으신가요?</p>
-            <Link to="/Signup">회원가입</Link>
+            <p>이미 계정이 있으신가요?</p>
+            <Link to="/Login">로그인</Link>
           </div>
         </div>
         <form className="form-wrapper">
+          <div className="email">
+            <label className="label">Email</label>
+            <input
+              className="input"
+              type="email"
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+            />
+            {errors.email && <p className="error">{errors.email}</p>}
+          </div>
           <div className="name">
             <label className="label">Name</label>
             <input
@@ -63,7 +80,7 @@ function Login() {
           </div>
           <div>
             <button className="submit" onClick={handleSubmit}>
-              로그인
+              가입하기
             </button>
           </div>
         </form>
@@ -72,4 +89,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

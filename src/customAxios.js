@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default function customAxios(url, callback) {
   axios({
-    url: "/api" + url,
+    url: "/user" + url,
     method: "post",
     baseURL: "http://localhost:8080",
     withCredentials: true,

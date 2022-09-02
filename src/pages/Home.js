@@ -8,6 +8,8 @@ function Home() {
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
   const [shortenUrl, setShortenUrl] = useState("");
+  const [users, setUsers] = useState();
+
   const handleClick = () => {
     setOriginUrl(value);
     setValue("");
@@ -32,6 +34,27 @@ function Home() {
       getData();
     }
   }, [originUrl]);
+
+  useEffect(() => {
+    let isMounted = true;
+    const controller = new AbortController();
+    const getUsers = async () => {
+      try {
+        const response = await axios.post("/", {
+          signal: controller.signal,
+        });
+        console.log(response.data);
+        isMounted && setUsers(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, []);
+
   if (loading) return <div>loading...</div>;
 
   return (
