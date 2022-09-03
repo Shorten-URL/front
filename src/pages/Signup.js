@@ -1,20 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../css/Signup.css";
+import axios from "../api/axios";
+const REGISTER_URL = "/signup";
+
 function Signup() {
-  const [values, setValues] = useState({
+  const initialValue = {
     username: "",
     password: "",
     email: "",
-  });
+  };
+  const [values, setValues] = useState(initialValue);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors(validation(values));
+    try {
+      const response = await axios.post(
+        REGISTER_URL,
+        JSON.stringify({
+          username: values.username,
+          password: values.password,
+          email: values.email,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      console.log(JSON.stringify(response?.data));
+      setErrors(validation(values));
+      setValues(initialValue);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const validation = (v) => {
     let error = {};
