@@ -12,7 +12,7 @@ function Signup() {
   };
   const [values, setValues] = useState(initialValue);
   const [errors, setErrors] = useState({});
-
+  const [message, setMessage] = useState("");
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -31,10 +31,10 @@ function Signup() {
           withCredentials: true,
         }
       );
-      console.log(response.data);
       console.log(JSON.stringify(response?.data));
       setErrors(validation(values));
       setValues(initialValue);
+      setMessage(response?.data.message);
     } catch (err) {
       console.log(err);
     }
@@ -47,13 +47,9 @@ function Signup() {
     }
     if (!v.email) {
       error.email = "이메일을 입력하세요.";
-    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(v.email)) {
-      error.email = "알맞은 이메일 형식을 입력하세요.";
     }
     if (!v.password) {
       error.password = "비밀번호를 입력하세요.";
-    } else if (v.password.length < 6) {
-      error.password = "6글자 이상 입력하세요.";
     }
     return error;
   };
@@ -101,6 +97,7 @@ function Signup() {
             />
             {errors.password && <p className="error">{errors.password}</p>}
           </div>
+          <div className="message">{message && <p>{message}</p>}</div>
           <div>
             <button className="submit" onClick={handleSubmit}>
               가입하기

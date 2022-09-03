@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../css/Signup.css";
 import AuthContext from "../context/AuthProvider";
 import axios from "../api/axios";
@@ -12,7 +12,13 @@ function Login() {
   };
   const [values, setValues] = useState(initialValue);
   const [errors, setErrors] = useState({});
+  const [status, setStatus] = useState("");
+
   const { setAuth } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state.from?.pathname || "/";
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -32,12 +38,15 @@ function Login() {
           withCredentials: true,
         }
       );
-      console.log(response.data);
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
+      const accessToken = response.data.data.accessToken;
+      const refreshToken = response.data.data.refreshToken;
+
       setErrors(validation(values));
       setValues(initialValue);
-      //setAuth({ values, roles, accessToken });
+      setStatus(response.data.message);
+      setAuth({ values, accessToken, refreshToken });
+      navigate(from, { replace: true });
+      if (response.data.code === "2000") navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -50,8 +59,6 @@ function Login() {
     }
     if (!v.password) {
       error.password = "비밀번호를 입력하세요.";
-    } else if (v.password.length < 6) {
-      error.password = "6글자 이상 입력하세요.";
     }
     return error;
   };
@@ -88,6 +95,7 @@ function Login() {
             />
             {errors.password && <p className="error">{errors.password}</p>}
           </div>
+          <div className="message">{status && <p>{status}</p>}</div>
           <div>
             <button className="submit" onClick={handleSubmit}>
               로그인

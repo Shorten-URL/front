@@ -7,25 +7,20 @@ import Home from "./pages/Home";
 import Logout from "./pages/Logout";
 import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
-
+import Admin from "./pages/Admin";
+import RequireAuth from "./components/RequireAuth";
 function App() {
-  /*const [ip, setIp] = useState("");
-  function callback(data) {
-    setIp(data);
-    console.log(ip);
-  }
-
-   useEffect(() => {
-    customAxios("/user", callback);
-  }, []);*/
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route element={<RequireAuth />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/Logout" element={<Logout />} />
+          <Route path="/Admin" element={<Admin />} />
+        </Route>
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Login" element={<Login />} />
-        <Route path="/Logout" element={<Logout />} />
       </Routes>
     </>
   );

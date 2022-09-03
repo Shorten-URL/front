@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../context/AuthProvider";
 function Admin() {
-  return <div>Admin</div>;
+  const { auth } = useContext(AuthContext);
+  const getData = () => {
+    console.log(auth);
+  };
+  return (
+    <div>
+      <button onClick={getData}>get</button>
+    </div>
+  );
 }
 
 export default Admin;

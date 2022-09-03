@@ -43,6 +43,14 @@
 .error{
     color:red;
 }
+.message{
+    font-size:18px;
+    display:flex;
+    color:blue;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:10px;
+}
 .submit{
     display:flex;
     text-transform: uppercase;

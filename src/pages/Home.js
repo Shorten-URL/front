@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import axios from "axios";
-
+import RequireAuth from "../components/RequireAuth";
 function Home() {
   const [value, setValue] = useState("");
   const [originUrl, setOriginUrl] = useState("");
